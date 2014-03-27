@@ -26,9 +26,9 @@ check_shinken.py:
     This check is getting daemons state from a arbiter connection.
     """
 
-    import os
-    import socket
-    from optparse import OptionParser
+import os
+import socket
+from optparse import OptionParser
 
 # Exit statuses recognized by Nagios and thus by Shinken
 OK = 0
@@ -41,23 +41,24 @@ PYRO_OBJECT = 'ForArbiter'
 daemon_types = {'arbiter':7770, 'broker':7772, 'scheduler':7768, 'reactionner':7769, 'poller':7771, 'receiver':7773 }
 
 
-# Try to import all Shinken stuff
+## Try to import all Shinken stuff
 try:
     import shinken
 except ImportError:
-# If importing shinken fails, try to load from current directory
-# or parent directory to support running without installation.
-# Submodules will then be loaded from there, too.
-import imp
-if not hasattr(os, "getuid") or os.getuid() != 0:
-    imp.load_module('shinken', *imp.find_module('shinken', [".", ".."]))
+    # If importing shinken fails, try to load from current directory
+    # or parent directory to support running without installation.
+    # Submodules will then be loaded from there, too.
+    import imp
+    if not hasattr(os, "getuid") or os.getuid() != 0:
+        imp.load_module('shinken', *imp.find_module('shinken', [".", ".."]))
 
-    try:
-        from shinken.http_client import HTTPClient, HTTPExceptions
-    except ImportError, exp:
-        print ('CRITICAL : check_shinken requires the Python Pycurl module.'
-                'Please install it. (%s)' % exp)
-        raise SystemExit(CRITICAL)
+try:
+    from shinken.http_client import HTTPClient, HTTPExceptions
+except ImportError, exp:
+    print ('CRITICAL : check_shinken requires the Python Pycurl module.'
+            'Please install it. (%s)' % exp)
+    raise SystemExit(CRITICAL)
+
 
 # Adding options. None are required, check_shinken will use shinken defaults
 # TODO: Add more control in args problem and usage than the default
