@@ -38,7 +38,7 @@ UNKNOWN = 3
 
 # Name of the Pyro Object we are searching
 PYRO_OBJECT = 'ForArbiter'
-daemon_types = {'arbiter':7770, 'broker':7772, 'scheduler':7768, 'poller':7771, 'reactionner':7773 }
+daemon_types = {'arbiter':7770, 'broker':7772, 'scheduler':7768, 'reactionner':7769, 'poller':7771, 'receiver':7773 }
 
 
 # Try to import all Shinken stuff
