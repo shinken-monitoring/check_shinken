@@ -108,9 +108,23 @@ except Exception, exp:
     print "CRITICAL : the %s is not reachable : (%s)." % (daemon,exp)
     raise SystemExit(CRITICAL)
 
-
 if result:
    if result=='pong':
+       if daemon != 'arbiter':
+           try:
+               result=con.get('have_conf')
+           except Exception, exp:
+               print "CRITICAL : the have_conf call to the %s failed : (%s)." % (daemon,exp)
+               raise SystemExit(CRITICAL)
+
+           if result:
+               daemon_type = 'live'
+           else:
+               daemon_type = 'spare'
+
+           print 'OK - ', daemon_type, daemon, 'alive'
+           raise SystemExit(OK)
+
        print 'OK - ', daemon, 'alive'
        raise SystemExit(OK)
    else:
@@ -119,4 +133,3 @@ if result:
 else:
     print 'UNKNOWN - %s status could not be retrieved' % daemon
     raise SystemExit(UNKNOWN)
-
