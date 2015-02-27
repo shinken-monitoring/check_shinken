@@ -77,8 +77,8 @@ parser.add_option('-w', '--warning', dest='warning', default=1, type=int)
 # If no deamon is left, display a critical (but shinken will be
 # probably dead already)
 parser.add_option('-c', '--critical', dest='critical', default=0, type=int)
-parser.add_option('-T', '--timeout', dest='timeout', default=10, type=float)
-parser.add_option('-D', '--data-timeout', dest='data_timeout', default=10, type=float)
+parser.add_option('-T', '--timeout', dest='timeout', default=10, type=int)
+parser.add_option('-D', '--data-timeout', dest='data_timeout', default=10, type=int)
 
 # Retrieving options
 options, args = parser.parse_args()
